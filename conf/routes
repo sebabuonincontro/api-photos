@@ -1,0 +1,4 @@
+
+GET         /images?page=:page&size=:size             controllers.PhotosController.getImages(page: Int, size: Int)
+GET         /images/:id                               controllers.PhotosController.getImage(id: String)
+
