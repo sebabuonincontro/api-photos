@@ -1,6 +1,6 @@
 package global
 
-import actors.TokenActor
+import actors.{TokenActor, TokenActorTask}
 import com.google.inject.{AbstractModule, Provides}
 import com.redis.RedisClient
 import domain.ApiData
@@ -21,6 +21,7 @@ class Module (environment: Environment, configuration: Configuration) extends Ab
   override def configure = {
     //Here initialize the token actor to obtain data from Agile Engine Api
     bindActor[TokenActor]("token-actor")
+    bind(classOf[TokenActorTask]).asEagerSingleton()
   }
 
   /**

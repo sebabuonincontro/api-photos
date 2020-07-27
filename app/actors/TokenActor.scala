@@ -65,10 +65,11 @@ class TokenActor @Inject() (photoRepository: PhotoRepository, apiPhotosService: 
    */
   private def getAndSavePictures(token: String, list: List[PictureItem]): ApiResult[Done] = {
     list.foreach{ item =>
-      for {
+      val result = for {
         picture <- EitherT( apiPhotosService.getImage(item.id, token) )
         _ <- EitherT( photoRepository.savePicture(picture))
       } yield ()
+      result.value
     }
     Future.successful(Right(Done))
   }

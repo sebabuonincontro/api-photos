@@ -21,8 +21,10 @@ class PhotosController @Inject()(cc: ControllerComponents, photosService: Photos
   with Resolver
   with Logging {
 
-  def getImages(page: Int, size: Int) = Action.async { _ =>
-    photosService.getPictureList(page, size).map (resolve(_) { result =>
+  def getImages(page: String, size: String) = Action.async { request =>
+    val p = page.toInt
+    val s = size.toInt
+    photosService.getPictureList(p, s).map (resolve(_) { result =>
       logger.info(s"Get Images SuccessFul.")
       Created(Json.toJson(result))
     })

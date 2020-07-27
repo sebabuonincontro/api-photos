@@ -25,7 +25,7 @@ class TokenActorTask @Inject()(
 
   actorSystem.scheduler.scheduleAtFixedRate(
     initialDelay = 0.microseconds,
-    interval = Duration(interval, TimeUnit.HOURS),
+    interval = Duration(interval, TimeUnit.SECONDS),
     receiver = tokenActor,
     message = ObtainList()
   )

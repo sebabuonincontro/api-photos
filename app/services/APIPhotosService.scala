@@ -13,6 +13,7 @@ import scala.concurrent.ExecutionContext
 class APIPhotosService @Inject() (wsClient: WSClient, apiData: ApiData)(implicit ec: ExecutionContext) extends Logging {
 
   def getToken: ApiResult[String] = {
+    logger.info("Get Data Information.")
     wsClient
       .url(apiData.url)
       .post(Map("apiKey" -> apiData.apiKey))
@@ -27,9 +28,13 @@ class APIPhotosService @Inject() (wsClient: WSClient, apiData: ApiData)(implicit
               Right(tokenRequest.token)
             }
           )
-          case error => Left(AgileEngineServiceError(s"Unable to connect git AgileEngine Photo Rest api: $error"))
+          case error =>
+            logger.error(s"Error while connect AgileEngine Photo Rest api: $error")
+            Left(AgileEngineServiceError(s"Unable to connect git AgileEngine Photo Rest api: $error"))
         }
-    }
+      }.recover{
+        case error => Left(AgileEngineServiceError(error.getMessage))
+      }
   }
 
   def getImage(id: String, token: String): ApiResult[Picture] = {
