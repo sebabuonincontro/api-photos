@@ -29,7 +29,7 @@ For more information, see conf/application.conf file.
 
 
 ### Endpoint
-GET         /images?page=:page&size=:size 
+GET         /images/:page/:size 
 page: number of Page.
 size: items per page.
 
